@@ -1,0 +1,113 @@
+:root {
+    --fondo-absoluto: #050505;
+    --color-terminal: #00ff41;
+    --color-alerta: #ffb000;
+    --borde-panel: 1px solid #00ff41;
+    --sombra-neon: 0 0 10px rgba(0,255,65,0.2);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--fondo-absoluto);
+    color: var(--color-terminal);
+    font-family: 'Courier New', Courier, monospace;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bunker-container {
+    width: 95%;
+    max-width: 1200px;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.consola-input {
+    display: flex;
+    gap: 15px;
+    padding: 20px;
+    border: var(--borde-panel);
+    box-shadow: var(--sombra-neon);
+    background-color: #0a0a0a;
+}
+
+.consola-input input {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--color-terminal);
+    font-family: inherit;
+    font-size: 1.2rem;
+    outline: none;
+}
+
+.consola-input button {
+    background-color: var(--color-terminal);
+    color: var(--fondo-absoluto);
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-family: inherit;
+    cursor:pointer;
+    transition: 0.2s;
+
+}
+
+.consola-input button:hover {
+    background-color: var(--color-alerta);
+    box-shadow: 0 0 15px var(--color-alerta);
+}
+
+.grid-paneles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    grid-template-rows: 1fr 1fr;
+    gap: 20px;
+    flex-grow: 1;
+}
+
+.panel {
+    border: var(--borde-panel);
+    background-color: #0a0a0a;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    box-shadow: var(--sombra-neon);
+}
+
+.panel-titulo {
+    font-size: 1rem;
+    border-bottom: 1px dasher var(--color-terminal);
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    color: var(--color-alerta)
+}
+
+.contenido-panel {
+    flex-grow: 1;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.scroll-activo {
+    overflow-y: auto;
+    max-height: 100%;
+}
+
+::-webkit-scrollbar{
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-terminal);
+}
