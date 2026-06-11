@@ -1,114 +1,173 @@
+/* ============================================
+   VARIABLES GLOBALES (Temas)
+============================================ */
+/* Modo Oscuro por defecto */
 :root {
-    --fondo-absoluto: #050505;
-    --color-terminal: #00ff41;
-    --color-alerta: #ffb000;
-    --borde-panel: 1px solid #00ff41;
-    --sombra-neon: 0 0 10px rgba(0,255,65,0.2);
+    --bg-deep: #0a0c10;
+    --bg-surface: rgba(12, 18, 28, 0.85);
+    --glass-border: rgba(56, 189, 248, 0.35);
+    --text-primary: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --accent-cyan: #00f5ff;
+    --accent-purple: #a855f7;
+    --card-bg: rgba(18, 25, 40, 0.7);
+    --input-bg: rgba(0, 0, 0, 0.35);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+/* Modo Claro (Se activa desde JS poniendo body class="light-mode") */
+body.light-mode {
+    --bg-deep: #e8edf5;
+    --bg-surface: rgba(245, 248, 250, 0.95);
+    --glass-border: rgba(0, 80, 120, 0.4);
+    --text-primary: #1a2c3e;
+    --text-secondary: #2c3e50;
+    --accent-cyan: #0066aa;
+    --accent-purple: #7c3aed;
+    --card-bg: rgba(255, 255, 255, 0.85);
+    --input-bg: rgba(0, 0, 0, 0.04);
 }
+
+/* Reseteo universal para evitar márgenes raros del navegador */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-    background-color: var(--fondo-absoluto);
-    color: var(--color-terminal);
-    font-family: 'Courier New', Courier, monospace;
+    background: radial-gradient(ellipse at 20% 30%, var(--bg-deep), #030712);
+    font-family: 'Inter', sans-serif;
+    color: var(--text-primary);
+    /* CLAVE: Bloqueamos el scroll de toda la pantalla para que sea como app de escritorio */
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    overflow: hidden; 
+    transition: var(--transition);
+}
+body.light-mode { background: linear-gradient(135deg, #dce3ec, #f0f4fa); }
+
+/* DRY: Clase reutilizable para pintar textos con degradado de colores */
+.text-gradient {
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+    -webkit-background-clip: text;
+    color: transparent;
 }
 
-.bunker-container {
-    width: 95%;
-    max-width: 1200px;
-    height: 90vh;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+/* =========================================
+   ELEMENTOS GLOBALES (Nav y Footer)
+========================================= */
+.navbar, .footer { 
+    position: fixed; 
+    left: 0; right: 0; 
+    background: transparent; /* Fondo invisible */
+    padding: 1rem 2rem; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    z-index: 1000; 
+}
+.navbar { top: 0; }
+.footer { bottom: 0; font-size: 0.75rem; color: var(--text-secondary); }
+
+/* Estilos de botones y links globales */
+.logo { display: flex; align-items: center; gap: 12px; font-size: 1.4rem; font-weight: 700; cursor: pointer; }
+.nav-links { display: flex; gap: 2rem; align-items: center; }
+.nav-links a { color: var(--text-secondary); text-decoration: none; }
+
+/* Botón Dark Mode con armonización */
+.theme-toggle { 
+    background: rgba(0, 0, 0, 0.35); 
+    border: 1px solid var(--glass-border); 
+    border-radius: 40px; 
+    padding: 8px 18px; 
+    color: var(--text-primary); 
+    cursor: pointer; 
+    display: flex; align-items: center; gap: 8px; 
+    transition: var(--transition);
+}
+.theme-toggle:hover { border-color: var(--accent-cyan); box-shadow: 0 0 15px rgba(0, 245, 255, 0.2); }
+.theme-toggle i { color: var(--accent-cyan); }
+body.light-mode .theme-toggle i { color: var(--accent-purple); }
+
+/* =========================================
+   PANTALLA 1: LANDING PAGE
+========================================= */
+.viewport-landing { 
+    height: 100vh; display: flex; justify-content: center; align-items: center; 
+}
+.landing-card { 
+    background: var(--card-bg); backdrop-filter: blur(16px); /* Efecto cristal */
+    border: 1px solid var(--glass-border); border-radius: 32px; 
+    padding: 48px 40px; max-width: 600px; width: 100%; text-align: center; 
+}
+.url-input-group { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
+.url-input-group input { 
+    background: var(--input-bg); border: 1px solid var(--glass-border); border-radius: 48px; 
+    padding: 16px 24px; color: var(--text-primary); outline: none; font-family: monospace; 
+}
+.btn-attack { 
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple)); 
+    border: none; border-radius: 48px; padding: 14px 32px; font-weight: 700; color: white; cursor: pointer; 
 }
 
-.consola-input {
-    display: flex;
-    gap: 15px;
-    padding: 20px;
-    border: var(--borde-panel);
-    box-shadow: var(--sombra-neon);
-    background-color: #0a0a0a;
+/* =========================================
+   PANTALLA 2: DASHBOARD (EL BÚNKER)
+========================================= */
+.viewport-dashboard { 
+    display: none; /* Oculto por defecto */
+    height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; 
+}
+/* Medidas estrictas pedidas */
+.bunker-container { width: 95%; max-width: 1200px; height: 85vh; display: flex; flex-direction: column; }
+
+/* GRILLA TÁCTICA 2x2 */
+.grid-paneles { 
+    display: grid; 
+    /* minmax(0, 1fr) impide que si inyectás una foto muy alta, se deforme la grilla */
+    grid-template-columns: repeat(2, minmax(0, 1fr)); 
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: 20px; flex: 1; min-height: 0; 
 }
 
-.consola-input input {
-    flex-grow: 1;
-    background: transparent;
-    border: none;
-    color: white;
-    border-bottom: 1px solid var(--color-terminal);
-    font-family: inherit;
-    font-size: 1.2rem;
-    outline: none;
+/* CAJAS INDIVIDUALES (Paneles) */
+.panel { 
+    background: var(--card-bg); backdrop-filter: blur(16px); 
+    border: 1px solid var(--glass-border); border-radius: 24px; 
+    padding: 18px; display: flex; flex-direction: column; min-height: 0; 
 }
+.panel-header h3 { font-size: 0.8rem; font-weight: 600; color: var(--accent-cyan); border-bottom: 1px solid var(--border-light); padding-bottom: 10px; margin-bottom: 12px; }
 
-.consola-input button {
-    background-color: var(--color-terminal);
-    color: var(--fondo-absoluto);
-    border: none;
-    padding: 10px 20px;
-    font-weight: bold;
-    font-family: inherit;
-    cursor:pointer;
-    transition: 0.2s;
+/* CONTROL DE DESBORDAMIENTO (OVERFLOW) */
+.panel-content { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.scroll-activo { overflow-y: auto; padding-right: 6px; }
 
-}
+/* Embellecimiento de la barra de scroll */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-thumb { background: var(--accent-cyan); border-radius: 10px; }
+::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.15); border-radius: 10px; }
 
-.consola-input button:hover {
-    background-color: var(--color-alerta);
-    box-shadow: 0 0 15px var(--color-alerta);
-}
+/* =========================================
+   COMPONENTES INTERNOS
+========================================= */
+.info-line { margin-bottom: 10px; padding-left: 10px; border-left: 2px solid var(--accent-cyan); font-size: 0.8rem; }
+.tech-badge { display: inline-block; background: var(--badge-bg); border: 1px solid var(--badge-border); border-radius: 20px; padding: 4px 12px; margin: 4px; font-size: 0.75rem; color: var(--accent-cyan); }
+.link-item { display: block; color: var(--text-secondary); text-decoration: none; padding: 8px 0; border-bottom: 1px solid var(--border-light); font-size: 0.8rem; word-break: break-all; }
 
-.grid-paneles {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+/* CARRUSEL CSS (Scrollea horizontal magnéticamente) */
+.carousel-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 10px; margin-top: 10px; }
+.carousel-item { flex: 0 0 100%; scroll-snap-align: center; max-height: 130px; object-fit: cover; border-radius: 12px; border: 1px solid var(--glass-border); }
 
-    grid-template-rows: 1fr 1fr;
-    gap: 20px;
-    flex-grow: 1;
-}
+/* BARRAS DE MÉTRICAS (HTML+CSS en lugar de JS) */
+.metric-item { margin-bottom: 18px; }
+.metric-header-info { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem; font-weight: 600; }
+.metric-bar-bg { width: 100%; background: rgba(255, 255, 255, 0.05); border-radius: 10px; height: 10px; }
+/* Esta es la barra de color que se llena dinámicamente con JS (style="width: X%") */
+.metric-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple)); border-radius: 10px; transition: width 1.5s ease-out; }
 
-.panel {
-    border: var(--borde-panel);
-    background-color: #0a0a0a;
-    display: flex;
-    flex-direction: column;
-    padding: 15px;
-    box-shadow: var(--sombra-neon);
-}
-
-.panel-titulo {
-    font-size: 1rem;
-    border-bottom: 1px dasher var(--color-terminal);
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-    color: var(--color-alerta)
-}
-
-.contenido-panel {
-    flex-grow: 1;
-    font-size: 0.9rem;
-    line-height: 1.5;
-}
-
-.scroll-activo {
-    overflow-y: auto;
-    max-height: 100%;
-}
-
-::-webkit-scrollbar{
-    width: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--color-terminal);
+/* =========================================
+   RESPONSIVE (Para Celulares)
+========================================= */
+@media (max-width: 768px) {
+    /* Permitimos scrollear la página entera en móvil */
+    .viewport-dashboard { height: auto; overflow-y: auto; padding: 70px 12px 40px; }
+    /* Pasamos la grilla de 2 columnas a 1 sola */
+    .grid-paneles { grid-template-columns: 1fr; grid-template-rows: auto; }
+    /* Le ponemos un tope de altura a los paneles para que no sean eternos */
+    .panel { max-height: 320px; }
 }

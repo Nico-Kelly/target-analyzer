@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTU | Target Analyzer Pro</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <nav class="navbar">
+        <div class="logo text-gradient">
+            <i class="fas fa-shield-haltered"></i>
+            <span>CTU ANALYZER</span>
+        </div>
+        <div class="nav-links">
+            <a href="#" id="doc-link"><i class="fas fa-book"></i> Documentación</a>
+            <button class="theme-toggle" id="theme-toggle"><i class="fas fa-moon"></i> Dark</button>
+        </div>
+    </nav>
+
+    <div id="viewport-landing" class="viewport-landing">
+        <div class="landing-card">
+            <div class="custom-illustration"></div>
+            <h1 class="text-gradient">Target Analyzer</h1>
+            <p>Ingrese el dominio objetivo para iniciar el análisis OSINT y obtener métricas en tiempo real.</p>
+            
+            <div class="url-input-group">
+                <input type="text" id="target-input" placeholder="https://ejemplo.com o dominio.com" autocomplete="off">
+                <button class="btn-attack" id="start-attack">INICIAR ATAQUE</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="viewport-dashboard" class="viewport-dashboard">
+        
+        <div class="bunker-container">
+            
+            <main class="grid-paneles">
+                
+                <section class="panel" id="panel-vista">
+                    <div class="panel-header">
+                        <h3>PANEL 1: VISTA</h3>
+                    </div>
+                    <div class="panel-content scroll-activo" id="vista-content"></div>
+                </section>
+                
+                <section class="panel" id="panel-tech">
+                    <div class="panel-header">
+                        <h3>PANEL 2: TECNOLOGÍA</h3>
+                    </div>
+                    <div class="panel-content scroll-activo" id="tech-content"></div>
+                </section>
+                
+                <section class="panel" id="panel-enlaces">
+                    <div class="panel-header">
+                        <h3>PANEL 3: MAPA ENLACES</h3>
+                    </div>
+                    <div class="panel-content scroll-activo" id="links-content"></div>
+                </section>
+                
+                <section class="panel" id="panel-metricas">
+                    <div class="panel-header">
+                        <h3>PANEL 4: MÉTRICAS</h3>
+                    </div>
+                    <div class="panel-content scroll-activo" id="metrics-content">
+                        </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div>2026 CTU Cyber Intelligence Unit</div>
+        <div><a href="#" id="footer-doc">Guía de uso</a> | Análisis seguro</div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
