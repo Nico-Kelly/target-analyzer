@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const PUERTO = 3000;
+const PUERTO = 3002;
 const { ejecutarEscaneo } = require('./crawler-service');
 /* configuracion de middlewares */
 app.use(cors());

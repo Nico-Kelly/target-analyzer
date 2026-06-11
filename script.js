@@ -54,7 +54,7 @@ async function startAnalysis() {
         // --------------------------------------------------
         // CONEXIÓN CON EL BÚNKER CENTRAL (PUPPETEER)
         // --------------------------------------------------
-        const urlDelBackend = 'http://localhost:3000/api/escanear'; 
+        const urlDelBackend = 'http://localhost:3002/api/escanear'; 
         
         const response = await fetch(urlDelBackend, {
             method: 'POST',
