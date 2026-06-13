@@ -1,33 +1,21 @@
 const express = require('express');
 const cors = require('cors');
+const rutasEscaneo = require('./src/routes/escaneo.routes');
+
 const app = express();
 const PUERTO = 3000;
 
-/* configuracion de middlewares */
+//middlewares
+
 app.use(cors());
 app.use(express.json());
 
-/* receptor */
+//conexión con el Front-End
+app.use(express.static('public'));
 
-app.post('/api/escanear', (req, res) => {
-    const urlRecibida = req.body.url;
-    console.log(`objetivo recibido en coordenadas: ${urlRecibida}`);
+app.use('/api', rutasEscaneo);
 
-    /* retorno al front */
-
-    res.json({
-        estado: 'EXITO',
-        mensaje: '[Enlace establecido]: Servidor a la espera del robot',
-        objetivo: urlRecibida
-    });
-});
-
-/* puesta en marcha del server  */
 
 app.listen(PUERTO, () => {
-    console.log(`[Búnker Central]: Escuchando comunicaciones en puerto ${PUERTO}`);
-});
-
-
-
-
+    console.log(`[Búnker Central]: Escuchando comunicaciones en el puerto ${PUERTO}`);
+})
