@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
 :root {
     --fondo-absoluto: #212121;
     --color-terminal: #ffffff;
     --background-panel:#28282e;
     --color-alerta: #6272a4;
-    --borde-panel: 1px solid #818181;
-    --sombra-neon: 0 0 10px rgba(255,102,204, 0.3);
+    --borde-panel: 1px solid #ff00a6;
+    --sombra-neon: 0 0 10px rgba(102, 130, 255, 0.4);
 }
 
 * {
@@ -16,7 +18,7 @@
 body {
     background-color: var(--fondo-absoluto);
     color: var(--color-terminal);
-    font-family: monospace;
+    font-family: 'JetBrains Mono', monospace;
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -39,7 +41,7 @@ body {
     border: var(--borde-panel);
     box-shadow: var(--sombra-neon);
     background-color: var(--background-panel);
-    border: 1px #008080 solid;
+    border: var(--borde-panel);
 }
 
 .consola-input input {
@@ -72,9 +74,8 @@ body {
 
 .grid-paneles {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-
-    grid-template-rows: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 2fr));
+    /*grid-template-rows: 1fr 1fr;*/
     gap: 20px;
     flex-grow: 1;
 }
