@@ -29,6 +29,12 @@ El servidor está construido con Node.js y Express. Sigue el patrón **Rutas-Con
 
 ## 🧠 ¿Por qué elegimos esta arquitectura?
 
-1. **Separación de Responsabilidades (Clean Architecture)**: Al no mezclar lógica de ruteo con lógica de negocio en un solo archivo, el código se vuelve altamente predecible. Si en el futuro se requiere escalar la lógica de extracción (ej. integrando un scraper avanzado), solo se interviene la capa correspondiente sin riesgo de romper el servidor o la comunicación HTTP.
+1. **Separación de Responsabilidades (Clean Architecture)**: Al no mezclar lógica de ruteo con lógica de negocio en un solo archivo, el código se vuelve altamente predecible. Si en el futuro se requiere escalar la lógica de extracción, solo se interviene la capa correspondiente sin riesgo de romper el servidor o la comunicación HTTP.
+
 2. **Preparado para Testing Unitario**: Esta división modular facilita enormemente la automatización. Se pueden simular peticiones con *Supertest* directamente contra los controladores, o testear servicios de forma aislada utilizando *Jest*, todo sin necesidad de levantar puertos o bases de datos en la red.
-3. **Despliegue Simplificado**: Al optar por un Monolito Modular donde Express sirve la carpeta `public/`, eliminamos la fricción de mantener múltiples servidores en el entorno local (ej. Live Server + Node). Con un solo comando, la aplicación íntegra se levanta en un único puerto, lista para iterar.
+(No implementamos aún estas librerias pero estamos leyendo su documentación evaluando la utilidad real para el proyecto)
+
+adjunto sus documentaciones, ambas librerias son de licencia MIT.
+
+https://www.npmjs.com/package/supertest
+https://jestjs.io/docs/getting-started
