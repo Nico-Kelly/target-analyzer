@@ -1,5 +1,5 @@
 const fs = require('fs').promises;
-const path = requite('path');
+const path = require('path');
 
 //ruta donde guardar el .txt
 const logFilePath = path.join(__dirname, '../../registro_bunker.txt');
