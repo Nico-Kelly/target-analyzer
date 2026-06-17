@@ -4,7 +4,6 @@ const iniciarEscaneo = async(req, res) => {
 
     try {
         const urlRecibida = req.body.url;
-
         await escribirLog('INFO', 'PETICIÓN', `Ruta Táctica golpeada: POST 'api/escanear'`);
         await escribirLog('INFO', 'PROCESO', `Objetivo recibido: ${urlRecibida}`);
 
@@ -13,12 +12,10 @@ const iniciarEscaneo = async(req, res) => {
         por aca vemos que hacer con el robot cuando esté
 
         */
-
+    
         //comunicación con el robot
 
         await escribirLog('SUCCESS', 'ROBOT', `El Robot escaneó la URL exitosamente`);
-
-
 
         /*retorno al front*/
 
@@ -29,7 +26,9 @@ const iniciarEscaneo = async(req, res) => {
         });
 
         await escribirLog('INFO', 'RETORNO', `Despachando JSON hacia el Frontend. Estado: 200`)
+
     } catch (error) {
+
         await escribirLog('ERROR', 'SISTEMA', `Falla crítica en el escaneo ${error.message}`);
 
         res.status(500).json({
