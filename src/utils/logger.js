@@ -1,0 +1,33 @@
+const fs = require('fs').promises;
+const path = requite('path');
+
+//ruta donde guardar el .txt
+const logFilePath = path.join(__dirname, '../../registro_bunker.txt');
+
+const escribirLog = async (tipoEvento, modulo, mensaje) => {
+
+    try {
+        //generamos el timestamp
+        const ahora = new Date();
+
+        //formato de la fecha en YYYY-MM-DD HH:MM (después discutimos en grupo como lo dejamos finalmente)
+
+        const fechaHora = ahora.toISOString().replace('T', ' ').substring(0, 19);
+
+        //armado de estructura
+
+        const lineaLog = `[${fechaHora}] [${tipoEvento}], [${modulo}] ${mensaje} \n`
+
+        //escribimos en el disco duro agregando al final del archivo para no borrar logs anteriores.
+
+        await fs.appendFile(logFilePath, lineaLog, 'utf8');
+
+        console.log(lineaLog.trim());
+
+    } catch (error) {
+        console.error('fallo crítico al intentar escribir en la bitácora', error)
+    }
+};
+
+
+module.exports = { escribirLog };
