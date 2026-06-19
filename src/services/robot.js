@@ -1,5 +1,5 @@
 const cheerio = require('cheerio');
-const puppeteer = require('puppeter');
+const puppeteer = require('puppeteer');
 
 async function ejecutarExtraccion(urlObjetivo) {
     let navegador;
@@ -20,9 +20,9 @@ async function ejecutarExtraccion(urlObjetivo) {
         if ($('[data-reactroot], #root').length > 0) frameworkFront = 'React';
         else if ($('[data-v-app], #root').length > 0) frameworkFront = 'Vue';
         else if ($('[ng-version], #root').length > 0) frameworkFront = 'Angular';
-        let languaje = 'HTML Estático / Desconocido';
+        let lenguaje = 'HTML Estático / Desconocido';
         if ($('meta[name="generator"]').attr('content')?.toLocaleLowerCase().includes('wordpress')){
-            languaje = 'PHP (Wordpress)';
+            lenguaje = 'PHP (Wordpress)';
         }
         const servidor = respuestaRed.headers()['server'] || 'Oculto';
         await navegador.close();
