@@ -1,4 +1,5 @@
 const { escribirLog } = require('../utils/logger');
+const servicioRobot = require('../services/robot')
 
 const iniciarEscaneo = async(req, res) => {
 
@@ -7,13 +8,7 @@ const iniciarEscaneo = async(req, res) => {
         await escribirLog('INFO', 'PETICIÓN', `Ruta Táctica golpeada: POST 'api/escanear'`);
         await escribirLog('INFO', 'PROCESO', `Objetivo recibido: ${urlRecibida}`);
 
-        /*
-
-        por aca vemos que hacer con el robot cuando esté
-
-        */
-    
-        //comunicación con el robot
+        const datosEscaneados = await servicioRobot.ejecutarExtraccion(urlRecibida);
 
         await escribirLog('SUCCESS', 'ROBOT', `El Robot escaneó la URL exitosamente`);
 
@@ -22,7 +17,8 @@ const iniciarEscaneo = async(req, res) => {
         res.json({
             estado: '200',
             mensaje: '[Enlace establecido: Servidor a la espera del robot',
-            objetivo: urlRecibida
+            objetivo: urlRecibida,
+            resultados: datosEscaneados
         });
 
         await escribirLog('INFO', 'RETORNO', `Despachando JSON hacia el Frontend. Estado: 200`)
