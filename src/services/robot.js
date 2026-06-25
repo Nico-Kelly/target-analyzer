@@ -50,4 +50,4 @@ async function ejecutarExtraccion(urlObjetivo) {
     }
 }
 
-module.exports = ejecutarExtraccion;
+module.exports = { ejecutarExtraccion };
