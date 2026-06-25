@@ -30,7 +30,8 @@ const iniciarEscaneo = async (req, res) => {
 
         res.status(500).json({
             estado: 'ERROR',
-            mensaje: 'Falla de comunicación con el escuadrón táctico'
+            mensaje: 'Falla de comunicación con el escuadrón táctico',
+            error: error.message
         });
 
     }
