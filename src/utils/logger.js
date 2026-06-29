@@ -10,7 +10,7 @@ const escribirLog = async (tipoEvento, modulo, mensaje) => {
         //generamos el timestamp
         const ahora = new Date();
 
-        //formato de la fecha en YYYY-MM-DD HH:MM (después discutimos en grupo como lo dejamos finalmente)
+        //formato de la fecha en YYYY-MM-DD HH:MM 
 
         const fechaHora = ahora.toISOString().replace('T', ' ').substring(0, 19);
 
