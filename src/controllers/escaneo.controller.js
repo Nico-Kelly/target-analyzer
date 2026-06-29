@@ -1,6 +1,6 @@
 const { escribirLog } = require('../utils/logger');
 const servicioRobot = require('../services/robot')
-
+const { verificarContraespionaje } = require('../utils/contraespionaje');
 const iniciarEscaneo = async (req, res) => {
 
     try {
@@ -11,6 +11,16 @@ const iniciarEscaneo = async (req, res) => {
         const datosEscaneados = await servicioRobot.ejecutarExtraccion(urlRecibida);
 
         await escribirLog('SUCCESS', 'ROBOT', `El Robot escaneó la URL exitosamente`);
+
+        // VERIFICACIÓN DE CONTRAESPIONAJE
+        if (verificarContraespionaje()) {
+            await escribirLog('ALERTA', 'SEGURIDAD', `Contraespionaje detectado en objetivo: ${urlRecibida}`);
+            return res.json({
+                estado: 'CONTRAESPIONAJE_DETECTADO',
+                mensaje: 'Counterintelligence protocols triggered. Please retry your request in 30 seconds while we finalize internal security measures.',
+                tiempoBloqueo: 30
+            });
+        }
 
         /*retorno al front*/
 
