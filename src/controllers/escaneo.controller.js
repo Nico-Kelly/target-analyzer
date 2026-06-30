@@ -1,7 +1,7 @@
 const { escribirLog } = require('../utils/logger');
 const servicioRobot = require('../services/robot');
 const { verificarContraespionaje } = require('../utils/contraespionaje'); // Integración manual de seguridad
-const validarUrl = require('../utils/validarUrl');
+const validarUrl = require('../validations/validarUrl');
 
 const iniciarEscaneo = async (req, res) => {
     try {
