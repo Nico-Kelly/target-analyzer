@@ -1,0 +1,3 @@
+[2026-06-30 03:40:26] [INFO], [SISTEMA] Servidor inicializado con éxito. Bunker central activo 
+[2026-06-30 03:40:42] [INFO], [PETICIÓN] Golpeando endpoint con URL: http://google.com 
+[2026-06-30 03:40:42] [ERROR], [SISTEMA] Falla en escaneo: Falla de comunicación con G4: fetch failed 

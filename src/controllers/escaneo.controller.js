@@ -1,16 +1,36 @@
 const { escribirLog } = require('../utils/logger');
 const servicioRobot = require('../services/robot');
 const { verificarContraespionaje } = require('../utils/contraespionaje'); // Integración manual de seguridad
+const validarUrl = require('../utils/validarUrl');
 
 const iniciarEscaneo = async (req, res) => {
     try {
         const urlRecibida = req.body.url;
-        await escribirLog('INFO', 'PETICIÓN', `Golpeando endpoint con URL: ${urlRecibida}`);
+
+        const validacion = validarUrl(urlRecibida);
+
+        if (!validacion.valida) {
+            await escribirLog('WARN', 'VALIDACIÓN', `URL rechazada: ${validacion.mensaje}`);
+
+            return res.status(400).json({
+                estado: 'ERROR',
+                codigo: 400,
+                mensaje: validacion.mensaje,
+                error: {
+                    tipo: 'VALIDATION_ERROR',
+                    detalle: validacion.mensaje
+                }
+            });
+        }
+
+        const urlValidada = validacion.url;
+
+        await escribirLog('INFO', 'PETICIÓN', `Golpeando endpoint con URL: ${urlValidada}`);
 
         // --- INICIO PROTOCOLO DE CONTRAESPIONAJE ---
         // --- PROTOCOLO DE CONTRAESPIONAJE ---
         if (verificarContraespionaje()) {
-            await escribirLog('ALERTA', 'SEGURIDAD', `Contraespionaje detectado en objetivo: ${urlRecibida}`);
+            await escribirLog('ALERTA', 'SEGURIDAD', `Contraespionaje detectado en objetivo: ${urlValidada}`);
 
             return res.status(403).json({
                 estado: 'CONTRAESPIONAJE_DETECTADO',
@@ -21,7 +41,7 @@ const iniciarEscaneo = async (req, res) => {
         // --- FIN PROTOCOLO DE CONTRAESPIONAJE ---
 
         // 1. Llamamos al microservicio del G4
-        const datosG4 = await servicioRobot.ejecutarExtraccion(urlRecibida);
+        const datosG4 = await servicioRobot.ejecutarExtraccion(urlValidada);
 
         // 2. Si pasamos la extracción, lo dejamos asentado
         await escribirLog('SUCCESS', 'ROBOT', `El microservicio G4 respondió correctamente`);
