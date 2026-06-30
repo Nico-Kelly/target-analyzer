@@ -4,5 +4,13 @@
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "puppeteer": "^25.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  },
+  "scripts": {
+    "start": "node receptor-server.js",
+    "dev": "nodemon receptor-server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
