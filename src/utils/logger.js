@@ -2,7 +2,7 @@ const fs = require('fs').promises;
 const path = require('path');
 
 //ruta donde guardar el .txt
-const logFilePath = path.join(__dirname, '../../registro_bunker.txt');
+// const logFilePath = path.join(__dirname, '../../registro_bunker.txt');
 
 const escribirLog = async (tipoEvento, modulo, mensaje) => {
 
@@ -10,16 +10,19 @@ const escribirLog = async (tipoEvento, modulo, mensaje) => {
         //generamos el timestamp
         const ahora = new Date();
 
-        //formato de la fecha en YYYY-MM-DD HH:MM 
-
+        //formato de la fecha en YYYY-MM-DD HH:MM (después discutimos en grupo como lo dejamos finalmente)
+        const fechaArchivo = ahora.toISOString().substring(0, 10);
         const fechaHora = ahora.toISOString().replace('T', ' ').substring(0, 19);
 
-        //armado de estructura
+        //ruta donde guardar el .txt
+        const logsDir = path.join(__dirname, '../logs');
+        await fs.mkdir(logsDir, { recursive: true });
+        const logFilePath = path.join(logsDir, `registro_bunker_${fechaArchivo}.txt`);
 
-        const lineaLog = `[${fechaHora}] [${tipoEvento}], [${modulo}] ${mensaje} \n`
+        //armado de estructura
+        const lineaLog = `[${fechaHora}] [${tipoEvento}] [${modulo}] ${mensaje}\n`
 
         //escribimos en el disco duro agregando al final del archivo para no borrar logs anteriores.
-
         await fs.appendFile(logFilePath, lineaLog, 'utf8');
 
         console.log(lineaLog.trim());
