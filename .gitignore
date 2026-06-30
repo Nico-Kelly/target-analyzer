@@ -1,4 +1,3 @@
 /node_modules
-/logs
+src/logs/
 registro_bunker.txt
-
