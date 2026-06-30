@@ -23,8 +23,6 @@ async function iniciarOperacion() {
     panelEnlaces.innerHTML = '<span style="color: var(--color-alerta)">[Rastreando objetivo...]</span>';
     if (panelMetricas) panelMetricas.innerHTML = '<span style="color: var(--color-alerta)">[Calculando latencia...]</span>';
     
-    
-
     /* disparo a la red, el famoso fetch. */
     try {
         const respuesta = await fetch('http://localhost:3000/api/escanear',{
@@ -41,9 +39,28 @@ async function iniciarOperacion() {
             return;
         }
 
-    
+        // ==========================================
+        // actualización para poder mostrar imagenes en el panelvistas
+        // ==========================================
+        if (datos.vista_objetivo && datos.vista_objetivo !== "No disponible") {
+            panelVista.innerHTML = `
+                <div style="text-align: center;">
+                    <span style="color: var(--color-terminal)">TÍTULO: ${datos.identidad.titulo}</span><br><br>
+                    <img 
+                        src="${datos.vista_objetivo}" 
+                        alt="Captura del objetivo" 
+                        style="max-width: 100%; border: 1px solid var(--color-terminal); border-radius: 4px;"
+                    >
+                </div>
+            `;
+        } else {
 
-        panelVista.innerHTML = `<span style="color: var(--color-terminal)">TÍTULO:<br>${datos.identidad.titulo}</span>`;
+            panelVista.innerHTML = `
+                <span style="color: var(--color-terminal)">TÍTULO:<br>${datos.identidad.titulo}</span><br><br>
+                <span style="color: red;">[ALERTA]: Captura de pantalla no disponible.</span>
+            `;
+        }
+        // ==========================================
 
         panelTech.innerHTML = `
             <span style="color: var(--color-terminal)">
@@ -52,9 +69,13 @@ async function iniciarOperacion() {
                 FRONTEND: ${datos.tecnologias.frameworkFront}
             </span>`;
 
+        // 
         panelEnlaces.innerHTML = `
             <span style="color: var(--color-terminal)">
-                OBJETIVO FIJADO:<br>${urlIngresada}
+                OBJETIVO FIJADO: <br>${urlIngresada}<br><br>
+                TOTAL ENLACES: ${datos.analisis_enlaces?.total_links || 0}<br>
+                LINKS INTERNOS: ${datos.analisis_enlaces?.links_internos || 0}<br>
+                HTTP INSEGUROS: ${datos.analisis_enlaces?.alertas_links_inseguros_http || 0}
             </span>`;
 
         if (panelMetricas) {
@@ -68,6 +89,6 @@ async function iniciarOperacion() {
 
     } catch (error) {
         panelTech.innerHTML = `<span style="color: red">[Fallo crítico de conexión con Búnker central]</span>`;
-        console.error(error); // Clave dejarlo para espiar errores con F12
+        console.error(error); 
     }
 }
