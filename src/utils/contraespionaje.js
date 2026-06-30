@@ -1,5 +1,5 @@
 // SISTEMA DE CONTRAESPIONAJE
-const PROBABILIDAD_CONTRAESPIONAJE = 20; // 20% de chance de detección
+const PROBABILIDAD_CONTRAESPIONAJE = 100; // 20% de chance de detección
 
 function verificarContraespionaje() {
     const numeroAleatorio = Math.random() * 100;

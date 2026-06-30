@@ -8,11 +8,13 @@ const iniciarEscaneo = async (req, res) => {
         await escribirLog('INFO', 'PETICIÓN', `Golpeando endpoint con URL: ${urlRecibida}`);
 
         // --- INICIO PROTOCOLO DE CONTRAESPIONAJE ---
+        // --- PROTOCOLO DE CONTRAESPIONAJE ---
         if (verificarContraespionaje()) {
             await escribirLog('ALERTA', 'SEGURIDAD', `Contraespionaje detectado en objetivo: ${urlRecibida}`);
+
             return res.status(403).json({
                 estado: 'CONTRAESPIONAJE_DETECTADO',
-                mensaje: 'Counterintelligence protocols triggered. Please retry your request in 30 seconds while we finalize internal security measures.',
+                mensaje: '¡ALERTA! Protocolo de contraespionaje activado. Tu rastro digital ha sido detectado por una entidad externa (Ghost Corp / CERN). Tu dirección IP está siendo triangulada.',
                 tiempoBloqueo: 30
             });
         }
