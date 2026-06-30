@@ -29,13 +29,39 @@ const iniciarEscaneo = async (req, res) => {
 
         // --- INICIO PROTOCOLO DE CONTRAESPIONAJE ---
         // --- PROTOCOLO DE CONTRAESPIONAJE ---
-        if (verificarContraespionaje()) {
+       if (verificarContraespionaje()) {
             await escribirLog('ALERTA', 'SEGURIDAD', `Contraespionaje detectado en objetivo: ${urlValidada}`);
 
-            return res.status(403).json({
-                estado: 'CONTRAESPIONAJE_DETECTADO',
-                mensaje: '¡ALERTA! Protocolo de contraespionaje activado. Tu rastro digital ha sido detectado por una entidad externa (Ghost Corp / CERN). Tu dirección IP está siendo triangulada.',
-                tiempoBloqueo: 30
+            // Engañamos al Front-End con un Status 200 y el Contrato Sagrado estructurado para asustar
+            return res.status(200).json({
+                estado: "EXITO",
+                mensaje: "[ALERTA MÁXIMA]: Protocolo de seguridad del objetivo comprometido.",
+                
+                // Panel 1: Mandamos el GIF de la calavera/radar parpadeante
+                vista_objetivo: "https://i.gifer.com/Q4P6.gif", 
+                
+                identidad: {
+                    titulo: "⚠️ AMENAZA DETECTADA ⚠️",
+                    descripcion: "Triangulando coordenadas de origen del atacante..."
+                },
+                tecnologias: {
+                    servidor: "SISTEMA COMPROMETIDO",
+                    lenguaje: "ESTAS SIENDO INVESTIGADO POR: CERN / FBI / GHOST_CORP",
+                    frameworkFront: "RASTREO ACTIVO: 100% COMPLETO TÚ IP ES 197.8.8.9"
+                },
+                metricas: {
+                    tiempoRespuestaMs: 666, // Un guiño clásico
+                    pesoDocumentoKb: "999.9",
+                    certSslVigente: false // El panel va a mostrar "VULNERABLE" en rojo
+                },
+                analisis_enlaces: {
+                    // Inyectamos números de enlaces falsos o códigos binarios rotos en el Panel 3
+                    total_links: "403",
+                    links_internos: "10101",
+                    links_externos: "00000",
+                    alertas_links_inseguros_http: "99",
+                    enlaces_externos_inseguros: "1337"
+                }
             });
         }
         // --- FIN PROTOCOLO DE CONTRAESPIONAJE ---
