@@ -14,7 +14,11 @@ app.use(express.static('public'));
 app.use('/api', rutasEscaneo);
 
 
-app.listen(PUERTO, () => {
-    logger.escribirLog('INFO', 'SISTEMA', 'Servidor inicializado con éxito. Bunker central activo');
-    console.log(`[Búnker Central]: Escuchando comunicaciones en el puerto ${PUERTO}`);
-})
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(PORT, () => {
+        logger.escribirLog('INFO', 'SISTEMA', 'Servidor inicializado con éxito. Bunker central activo');
+        console.log(`[Búnker Central]: Escuchando comunicaciones en el puerto ${PORT}`);
+    });
+}
+
+module.exports = app;
