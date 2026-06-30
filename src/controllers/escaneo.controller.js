@@ -1,10 +1,22 @@
 const { escribirLog } = require('../utils/logger');
 const servicioRobot = require('../services/robot');
+const { verificarContraespionaje } = require('../utils/contraespionaje'); // Integración manual de seguridad
 
 const iniciarEscaneo = async (req, res) => {
     try {
         const urlRecibida = req.body.url;
         await escribirLog('INFO', 'PETICIÓN', `Golpeando endpoint con URL: ${urlRecibida}`);
+
+        // --- INICIO PROTOCOLO DE CONTRAESPIONAJE ---
+        if (verificarContraespionaje()) {
+            await escribirLog('ALERTA', 'SEGURIDAD', `Contraespionaje detectado en objetivo: ${urlRecibida}`);
+            return res.status(403).json({
+                estado: 'CONTRAESPIONAJE_DETECTADO',
+                mensaje: 'Counterintelligence protocols triggered. Please retry your request in 30 seconds while we finalize internal security measures.',
+                tiempoBloqueo: 30
+            });
+        }
+        // --- FIN PROTOCOLO DE CONTRAESPIONAJE ---
 
         // 1. Llamamos al microservicio del G4
         const datosG4 = await servicioRobot.ejecutarExtraccion(urlRecibida);
@@ -35,7 +47,6 @@ const iniciarEscaneo = async (req, res) => {
                 certSslVigente: datosG4.metrics?.sslValid || false
             },
             analisis_enlaces: {
-                // Ellos mandan la cantidad total en metrics.linkCount
                 total_links: datosG4.metrics?.linkCount || 0,
                 links_internos: 0,
                 links_externos: 0,
