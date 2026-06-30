@@ -63,7 +63,7 @@ describe('Suite de Pruebas: Controlador de Escaneo', () => {
         expect(respuesta.body.identidad.titulo).toBe('Test Title');
         expect(respuesta.body.metricas.tiempoRespuestaMs).toBe(150);
         
-        // Verificamos que se inyecte nuestra propiedad de fall-back
+        // Verificamos que se inyecte nuestra propiedad de fall-back. toBeDefined es literalmente "espero que esta variable exista"
         expect(respuesta.body.analisis_enlaces.total_links).toBeDefined();
     });
 });
