@@ -1,5 +1,7 @@
 const { escribirLog } = require('../utils/logger');
+// const servicioRobot = require('../services/robot_grupo6')
 const servicioRobot = require('../services/robot')
+// const servicioRobot = require('../services/tp-robot')
 
 const iniciarEscaneo = async (req, res) => {
 
@@ -40,6 +42,19 @@ const iniciarEscaneo = async (req, res) => {
 
 };
 
+const avisarEstadoOK = async (req, res) => {
+    await escribirLog('INFO', 'PETICIÓN', 'Estado de API');
+    await escribirLog('SUCCESS', 'API Endpoint', `El endpoint respondio exitosamente`);
+
+    res.json({
+        estado: '200',
+        mensaje: 'API funcionando',
+        servicio: 'robot-scanner',
+        fecha: new Date().toISOString()
+    });
+}
+
 module.exports = {
-    iniciarEscaneo
+    iniciarEscaneo,
+    avisarEstadoOK
 }
