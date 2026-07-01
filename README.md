@@ -1,50 +1,62 @@
-
-# 🎯 Target Analyzer (Analizador de Objetivos)
+# 🎯 Target Analyzer - Búnker Central (API Gateway)
 
 ## 📌 Resumen de la Operación (Visión General)
-Target Analyzer es un proyecto académico diseñado para simular una herramienta de recolección de inteligencia web (OSINT). Su función principal es recibir la dirección de una página web (URL), enviar una sonda a explorarla de forma invisible y devolver un reporte detallado con sus tecnologías, métricas de rendimiento y estado de seguridad.
+Target Analyzer es un proyecto académico diseñado para simular una herramienta táctica de recolección de inteligencia web (OSINT). Su función principal es recibir la dirección de una página web (URL), orquestar una exploración asíncrona mediante microservicios externos y devolver un reporte estructurado y normalizado con tecnologías, métricas de rendimiento y parámetros de seguridad.
 
-A nivel técnico, el proyecto implementa una **Arquitectura en Capas (Layered Architecture)** estructurada como un **Monolito Modular**. Esto significa que tanto la interfaz de usuario (Front-End) como la lógica del servidor (Back-End) coexisten en el mismo repositorio y son servidos por la misma instancia de Node.js (Express), manteniendo una estricta separación de responsabilidades.
-
----
-
-## 🎨 Front-End (La Vidriera)
-**Ubicación:** Carpeta `public/`
-
-Esta capa es el cliente estático. Su única responsabilidad es dibujar la interfaz, capturar las interacciones del usuario y comunicarse con la API. Como está alojada bajo el mismo techo que el servidor, se evitan problemas de CORS y se utilizan rutas relativas limpias.
-
-* **`index.html`:** Estructura de la aplicación (la grilla de monitoreo y la consola de comandos).
-* **`style.css`:** Diseño visual utilizando CSS puro (CSS Grid, variables personalizadas, paleta oscura y tipografía técnica *JetBrains Mono* para un aspecto de terminal de intrusión).
-* **`emisor-script.js`:** Lógica del cliente. Maneja el DOM de forma asíncrona, captura la URL objetivo y realiza la petición HTTP (`fetch('/api/escanear')`) hacia el Búnker Central.
+A nivel arquitectónico, el sistema evolucionó de un Monolito a un **API Gateway**. Nuestro Back-End asume el rol de escudo centralizador: recibe las peticiones del Front-End (Grupo 1), delega el *web scraping* pesado al Robot externo (Grupo 4), y formatea los datos bajo un **Contrato JSON Estricto** para garantizar que la interfaz gráfica nunca colapse por inconsistencias.
 
 ---
 
-## ⚙️ Back-End (El Búnker Central)
-**Ubicación:** Directorio raíz y subcarpetas dentro de `src/`
+## 🚀 Puesta en Marcha (Instalación y Comandos)
 
-El servidor está construido con Node.js y Express. Sigue el patrón **Rutas-Controladores-Servicios** para aislar la infraestructura de red de la lógica táctica de negocio.
+### 1. Instalación de Dependencias
+Asegurate de tener Node.js instalado. Cloná el repositorio y ejecutá el siguiente comando en la terminal para instalar las dependencias principales (Express, CORS) y las herramientas de desarrollo:
+```bash
+npm install
+``` 
+2. Comandos Operativos (npm scripts)
 
-* **`receptor-server.js`:** El punto de entrada principal. Inicializa el servidor, configura los middlewares (`cors`, `express.json`), expone estáticamente la carpeta `public/` al navegador y delega el tráfico a las rutas correspondientes.
-* 📂 **`src/routes/` (El Radar):** Define los *endpoints* de la API (ej. `POST /api/escanear`). Su única función es escuchar peticiones entrantes y derivarlas al sector adecuado. No procesa ni altera datos.
-* 📂 **`src/controllers/` (La Aduana):** Es el cerebro de las operaciones. Recibe la petición (`req`), extrae y valida la carga útil (URL objetivo), orquesta la misión enviando al robot, y empaqueta la respuesta JSON (`res`) de regreso al Front-End.
-* 📂 **`src/services/` (El Escuadrón Táctico):** Aquí vive la herramienta de extracción. Utilizando **Puppeteer** (un navegador invisible) y **Cheerio**, el robot viaja a la URL indicada, lee su código interno y extrae las tecnologías y métricas clave.
+El proyecto cuenta con comandos estandarizados en el package.json para facilitar el flujo de trabajo:
 
----
+   - npm start (Entorno de Producción):
+    Levanta el servidor de forma estándar utilizando Node.js. Ideal para despliegues definitivos.
 
-## 📝 Sistema de Registros (La Caja Negra)
-**Ubicación:** `src/utils/logger.js`
+   - npm run dev (Entorno de Desarrollo):
+    Inicia el servidor utilizando Nodemon.
+    ¿Por qué lo integramos? Nodemon vigila constantemente los archivos del proyecto y reinicia el servidor automáticamente cada vez que guardamos un cambio (Ctrl + S). Esto elimina la necesidad de apagar y prender el servidor manualmente, agilizando drásticamente la escritura de código.
 
-Para cumplir con los requisitos de trazabilidad, el sistema cuenta con un motor de registros transversal. Este módulo anota cada evento crítico (arranque, peticiones, éxitos o fallas) en un archivo local llamado `registro_bunker.txt`. 
+   - npm test (Entorno de QA Automation):
+    Ejecuta la suite de pruebas automatizadas utilizando Jest y Supertest.
+    ¿Por qué los integramos? Al depender de un microservicio externo (Robot G4), necesitábamos testear nuestra API sin depender de su conexión de red. Jest nos permite falsificar (Mockear) las respuestas del robot, mientras que Supertest levanta una versión fantasma del servidor en la memoria RAM. Esto nos permite validar los códigos HTTP (200, 400, 500) en milisegundos y asegurar que nuestro código es a prueba de balas.
 
-**Detalle de rendimiento:** Para evitar que el servidor se vuelva lento o bloquee el *Event Loop* mientras escribe en el disco duro, este proceso utiliza el módulo nativo `fs.promises` de forma **asíncrona**, permitiendo que el servidor siga atendiendo múltiples conexiones en paralelo.
+## Arquitectura de Carpetas (Separation of Concerns)
 
----
+Para evitar el "Código Espagueti", el Búnker Central está diseñado bajo una estricta separación de responsabilidades:
 
-## 🧠 Fundamentos de Ingeniería: ¿Por qué elegimos esta arquitectura?
+📦 target-analyzer
+ ┣ 📂 public/        # 🎨 CAPA DE PRESENTACIÓN (FRONT-END CLIENTE)
+ ┃                   # Aquí puede alojarse el Front-End de cualquier grupo.
+ ┃                   # Actualmente incluye un cliente básico (HTML/CSS/JS) 
+ ┃                   # diseñado por nuestro equipo para testeos visuales rápidos.
+ ┣ 📂 src/
+ ┃ ┣ 📂 controllers/ # 🧠 CEREBRO Y ADUANA: Valida peticiones, orquesta la extracción y formatea el JSON definitivo.
+ ┃ ┣ 📂 logs/        # 🗄️ CAJA NEGRA: Almacenamiento físico de la bitácora de eventos rotativa.
+ ┃ ┣ 📂 routes/      # 🚦 SEMÁFOROS: Define los endpoints (ej. /api/escanear) y deriva el tráfico.
+ ┃ ┣ 📂 services/    # ⚙️ ESCUADRÓN TÁCTICO: Lógica asíncrona. Contiene el fetch al robot (Puerto 3001).
+ ┃ ┣ 📂 tests/       # 🧪 QA AUTOMATION: Archivos de prueba unitaria y de integración (.test.js).
+ ┃ ┣ 📂 utils/       # 🛠️ HERRAMIENTAS: Scripts transversales (Logger asincrónico, lógica de Contraespionaje).
+ ┃ ┗ 📂 validations/ # 🛡️ PRIMERA DEFENSA: Expresiones regulares para validar URLs de entrada.
+ ┣ 📜 package.json   # Manifiesto de dependencias y scripts.
+ ┗ 📜 receptor-server.js # Punto de entrada principal. Configura middlewares y levanta Express.
 
-1. **Separación de Responsabilidades (Clean Architecture):** Al no mezclar lógica de ruteo con lógica de negocio o extracción en un solo archivo, el código se vuelve predecible. Si en el futuro se requiere actualizar el motor del Robot, solo se interviene la capa de Servicios sin riesgo de romper la comunicación HTTP del servidor.
-2. **Preparado para Testing Automatizado:** Esta división modular facilita aislar los componentes para pruebas de calidad (QA). Se pueden simular peticiones contra los controladores o probar servicios específicos sin levantar puertos en la red. 
-   *(Actualmente en fase de evaluación para futura integración utilizando herramientas de licencia MIT como [Supertest](https://www.npmjs.com/package/supertest) para la API y [Jest](https://jestjs.io/docs/getting-started) para testing unitario).*
+## Características Clave de Ingeniería
 
----
+    1. El Contrato Sagrado (JSON Definitivo): Sin importar qué datos omita el Robot de extracción, nuestro controlador inyecta valores de contingencia (Fall-backs, ej: total_links: 0). El Front-End siempre recibe las mismas variables, garantizando estabilidad visual.
 
+    2. Resiliencia de Red (Timeout): El fetch hacia el Robot está vigilado por un AbortController nativo. Si el motor externo no responde en 20 segundos, la conexión se aborta automáticamente liberando los hilos del servidor y retornando un Error 500 controlado.
+
+    3. Protocolo de Contraespionaje (Falso Positivo): Simulador de seguridad corporativa. Si se cae en la probabilidad de la funcion de Contraespionaje, el Back-End aborta el escaneo real pero devuelve un falso Status 200 OK al Front-End. Esto fuerza a la interfaz gráfica a renderizar alertas visuales ("RASTREO DETECTADO"), logrando un hackeo de interfaz controlado estrictamente desde el servidor.
+
+    3. Sistema de Logging Asincrónico: Utilizando fs.promises, el servidor registra todos los eventos críticos en el disco duro sin bloquear el Event Loop, permitiendo atender a múltiples usuarios simultáneamente.
+
+Desarrollado por el Grupo 3 - Comisión 8 | Proyecto Final "Desarrollo Web Full Stack"
