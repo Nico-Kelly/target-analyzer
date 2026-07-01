@@ -31,7 +31,7 @@ async function ejecutarExtraccion(urlObjetivo) {
     } catch (error) {
         clearTimeout(timeoutId); // Limpiamos por las dudas si explotó por otra cosa
         
-        // 4. Atrapamos el error específico del timeout
+        // Atrapamos el error específico del timeout
         if (error.name === 'AbortError') {
             throw new Error('TIMEOUT: El robot táctico tardó demasiado en responder (límite de 20s excedido).');
         }
