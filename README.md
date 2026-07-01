@@ -7,7 +7,7 @@ A nivel arquitectónico, el sistema evolucionó de un Monolito a un **API Gatewa
 
 ---
 
-## 🚀 Puesta en Marcha (Instalación y Comandos)
+##  Puesta en Marcha (Instalación y Comandos)
 
 ### 1. Instalación de Dependencias
 Asegurate de tener Node.js instalado. Cloná el repositorio y ejecutá el siguiente comando en la terminal para instalar las dependencias principales (Express, CORS) y las herramientas de desarrollo:
@@ -35,18 +35,18 @@ Para evitar el "Código Espagueti", el Búnker Central está diseñado bajo una 
 
 ```text
 target-analyzer/
-|-- public/           # 🎨 CAPA DE PRESENTACIÓN: Aquí puede alojarse el Front-End de cualquier grupo.
-|                     # (Incluye cliente básico para testeos visuales rápidos).
+|-- public/            #  CAPA DE PRESENTACIÓN: Aquí puede alojarse el Front-End de cualquier grupo.
+|                      # (Incluye cliente básico para testeos visuales rápidos).
 |-- src/
-|   |-- controllers/  # 🧠 CEREBRO Y ADUANA: Valida peticiones, orquesta la extracción y formatea JSON.
-|   |-- logs/         # 🗄️ CAJA NEGRA: Almacenamiento de la bitácora de eventos rotativa.
-|   |-- routes/       # 🚦 SEMÁFOROS: Define los endpoints y deriva el tráfico.
-|   |-- services/     # ⚙️ ESCUADRÓN TÁCTICO: Lógica asíncrona (fetch al robot en Puerto 3001).
-|   |-- tests/        # 🧪 QA AUTOMATION: Archivos de prueba unitaria y de integración (.test.js).
-|   |-- utils/        # 🛠️ HERRAMIENTAS: Logger asincrónico y lógica de Contraespionaje.
-|   |-- validations/  # 🛡️ PRIMERA DEFENSA: Expresiones regulares para validar URLs de entrada.
-|-- package.json      # 📦 Manifiesto de dependencias y scripts.
-|-- receptor-server.js# 🚀 Punto de entrada principal (Express / Middlewares).
+|   |-- controllers/   #  CEREBRO Y ADUANA: Valida peticiones, orquesta la extracción y formatea JSON.
+|   |-- logs/          #  CAJA NEGRA: Almacenamiento de la bitácora de eventos rotativa.
+|   |-- routes/        #  SEMÁFOROS: Define los endpoints y deriva el tráfico.
+|   |-- services/      #  ESCUADRÓN TÁCTICO: Lógica asíncrona (fetch al robot en Puerto 3001).
+|   |-- tests/         #  QA AUTOMATION: Archivos de prueba unitaria y de integración (.test.js).
+|   |-- utils/         #  HERRAMIENTAS: Logger asincrónico y lógica de Contraespionaje.
+|   |-- validations/   #  PRIMERA DEFENSA: Expresiones regulares para validar URLs de entrada.
+|-- package.json       #  Manifiesto de dependencias y scripts.
+|-- receptor-server.js #  Punto de entrada principal (Express / Middlewares).
 ```
 
 ## Características Clave de Ingeniería
