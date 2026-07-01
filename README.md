@@ -33,6 +33,7 @@ El proyecto cuenta con comandos estandarizados en el package.json para facilitar
 
 Para evitar el "Código Espagueti", el Búnker Central está diseñado bajo una estricta separación de responsabilidades:
 
+```text
 target-analyzer/
 |-- public/           # 🎨 CAPA DE PRESENTACIÓN: Aquí puede alojarse el Front-End de cualquier grupo.
 |                     # (Incluye cliente básico para testeos visuales rápidos).
@@ -46,6 +47,7 @@ target-analyzer/
 |   |-- validations/  # 🛡️ PRIMERA DEFENSA: Expresiones regulares para validar URLs de entrada.
 |-- package.json      # 📦 Manifiesto de dependencias y scripts.
 |-- receptor-server.js# 🚀 Punto de entrada principal (Express / Middlewares).
+```
 
 ## Características Clave de Ingeniería
 
