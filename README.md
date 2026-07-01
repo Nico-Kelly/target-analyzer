@@ -33,21 +33,19 @@ El proyecto cuenta con comandos estandarizados en el package.json para facilitar
 
 Para evitar el "Código Espagueti", el Búnker Central está diseñado bajo una estricta separación de responsabilidades:
 
-📦 target-analyzer
- ┣ 📂 public/        # 🎨 CAPA DE PRESENTACIÓN (FRONT-END CLIENTE)
- ┃                   # Aquí puede alojarse el Front-End de cualquier grupo.
- ┃                   # Actualmente incluye un cliente básico (HTML/CSS/JS) 
- ┃                   # diseñado por nuestro equipo para testeos visuales rápidos.
- ┣ 📂 src/
- ┃ ┣ 📂 controllers/ # 🧠 CEREBRO Y ADUANA: Valida peticiones, orquesta la extracción y formatea el JSON definitivo.
- ┃ ┣ 📂 logs/        # 🗄️ CAJA NEGRA: Almacenamiento físico de la bitácora de eventos rotativa.
- ┃ ┣ 📂 routes/      # 🚦 SEMÁFOROS: Define los endpoints (ej. /api/escanear) y deriva el tráfico.
- ┃ ┣ 📂 services/    # ⚙️ ESCUADRÓN TÁCTICO: Lógica asíncrona. Contiene el fetch al robot (Puerto 3001).
- ┃ ┣ 📂 tests/       # 🧪 QA AUTOMATION: Archivos de prueba unitaria y de integración (.test.js).
- ┃ ┣ 📂 utils/       # 🛠️ HERRAMIENTAS: Scripts transversales (Logger asincrónico, lógica de Contraespionaje).
- ┃ ┗ 📂 validations/ # 🛡️ PRIMERA DEFENSA: Expresiones regulares para validar URLs de entrada.
- ┣ 📜 package.json   # Manifiesto de dependencias y scripts.
- ┗ 📜 receptor-server.js # Punto de entrada principal. Configura middlewares y levanta Express.
+target-analyzer/
+|-- public/           # 🎨 CAPA DE PRESENTACIÓN: Aquí puede alojarse el Front-End de cualquier grupo.
+|                     # (Incluye cliente básico para testeos visuales rápidos).
+|-- src/
+|   |-- controllers/  # 🧠 CEREBRO Y ADUANA: Valida peticiones, orquesta la extracción y formatea JSON.
+|   |-- logs/         # 🗄️ CAJA NEGRA: Almacenamiento de la bitácora de eventos rotativa.
+|   |-- routes/       # 🚦 SEMÁFOROS: Define los endpoints y deriva el tráfico.
+|   |-- services/     # ⚙️ ESCUADRÓN TÁCTICO: Lógica asíncrona (fetch al robot en Puerto 3001).
+|   |-- tests/        # 🧪 QA AUTOMATION: Archivos de prueba unitaria y de integración (.test.js).
+|   |-- utils/        # 🛠️ HERRAMIENTAS: Logger asincrónico y lógica de Contraespionaje.
+|   |-- validations/  # 🛡️ PRIMERA DEFENSA: Expresiones regulares para validar URLs de entrada.
+|-- package.json      # 📦 Manifiesto de dependencias y scripts.
+|-- receptor-server.js# 🚀 Punto de entrada principal (Express / Middlewares).
 
 ## Características Clave de Ingeniería
 
